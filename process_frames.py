@@ -4,7 +4,7 @@ from detect import detect_vehicles
 from recog_v2 import recognizer
 
 directory = 'cctv'
-output_folder = 'lpd_output'
+output_folder = 'lpd_outputv2'
 # class_id = [2]
 class_ids = [1, 2, 3, 5, 7]
 # class_ids = [3]
@@ -14,4 +14,4 @@ recog=True
 for filepath in pathlib.Path(directory).glob('**/*'):
     image_path = str(filepath.absolute())
     image_name = str(filepath.name)
-    detect_vehicles(image_path, image_name, class_ids, output_folder, score_threshold, recog)
+    detect_vehicles(image_path, image_name, class_ids, output_folder, recog, score_threshold)

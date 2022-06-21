@@ -11,6 +11,7 @@ from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog, DatasetCatalog
 import numpy as np
 from recog_v2 import recognizer
+from recog_v3 import recog_v3
 
 cfg = get_cfg()
 cfg.merge_from_file(model_zoo.get_config_file("COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml"))
@@ -41,8 +42,10 @@ def detect_multiclass(image, instant, class_id, image_name, output_folder, recog
         # v.draw_text(str(box[:2].numpy()), tuple(box[:2].numpy()))
         i+=1
         if recog==True:
-            recognizer(image_name, detected_image, bbox, output_folder, actual_image=image)
-        # else:
+            # recognizer(image_name, detected_image, bbox, output_folder, actual_image=image)
+            recog_v3(detected_image, image, bbox, image_name, output_folder)
+        else:
+            cv2.imwrite(output_folder + '/' + image_name, cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 
 def detect_vehicles(image_path, image_name, class_ids, output_folder, recog=True, score_threshold=0.95):
 
