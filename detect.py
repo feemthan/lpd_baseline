@@ -42,6 +42,7 @@ def detect_multiclass(image, instant, class_id, image_name, output_folder, recog
         i+=1
         if recog==True:
             recognizer(image_name, detected_image, bbox, output_folder, actual_image=image)
+        # else:
 
 def detect_vehicles(image_path, image_name, class_ids, output_folder, recog=True, score_threshold=0.95):
 
