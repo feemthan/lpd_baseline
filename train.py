@@ -31,9 +31,6 @@ test_json_annotation_path = dataset_root + "/test.json"
 
 cfg_save_path = output_dir + "/od_cfg.pickle"
 
-################################################################################
-
-# Register dataset
 register_coco_instances(
     name=train_dataset_name,
     metadata={},
@@ -47,10 +44,6 @@ register_coco_instances(
     json_file=test_json_annotation_path,
     image_root=test_images_path,
 )
-
-# plot_samples(dataset_name=train_dataset_name, n=2)
-
-################################################################################
 
 def get_train_cfg(
     config_file_path,

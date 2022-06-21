@@ -54,7 +54,7 @@ def recog_v3(detected_image, actual_image, detected_bbox, image_name, output_fol
     # pdb.set_trace()
     bbox = outputs['instances'].pred_boxes.tensor.cpu().numpy().astype(int).tolist()
     if bbox == []:
-        return
+        return False
     x1, y1, x2, y2 = bbox[0]
     # plt.figure(figsize=(14, 10))
     # plt.imshow(viz.get_image())
@@ -79,3 +79,4 @@ def recog_v3(detected_image, actual_image, detected_bbox, image_name, output_fol
             _ = cv2.putText(_, output, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
             _ = cv2.putText(_, str(round(actual_score, 2)), (x+w-40, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
             cv2.imwrite(output_folder + '/' + image_name, cv2.cvtColor(_, cv2.COLOR_BGR2RGB))
+            return True

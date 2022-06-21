@@ -43,18 +43,20 @@ def detect_multiclass(image, instant, class_id, image_name, output_folder, recog
         i+=1
         if recog==True:
             # recognizer(image_name, detected_image, bbox, output_folder, actual_image=image)
-            recog_v3(detected_image, image, bbox, image_name, output_folder)
+            success_check = recog_v3(detected_image, image, bbox, image_name, output_folder)
+            if success_check!=True:
+                cv2.imwrite(output_folder + '/' + image_name, cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
         else:
             cv2.imwrite(output_folder + '/' + image_name, cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 
-def detect_vehicles(image_path, image_name, class_ids, output_folder, recog=True, score_threshold=0.95):
+def detect_vehicles(image_path, image_name, class_ids, output_folder, recog=True, detection_score_threshold=0.90):
 
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     outputs = predictor(image)
     # visualizer = Visualizer(image[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2)
     instances = outputs['instances']
-    instant = instances[instances.scores>score_threshold]
+    instant = instances[instances.scores>detection_score_threshold]
     for class_id in class_ids:
         # out = visualizer.draw_instance_predictions(instances[instances.pred_classes==class_id].to('cpu'))
         # import pdb
